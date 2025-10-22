@@ -16,3 +16,19 @@ if(buttonStatus.length>0){
         })
     })
 }
+
+//from search
+const fromSearch=document.querySelector("#form-search");
+if(fromSearch){
+    let url = new URL(window.location.href); 
+    fromSearch.addEventListener("submit",(e)=>{
+        e.preventDefault();
+        const keyWord = e.target.elements.keyword.value;
+        if(keyWord){
+            url.searchParams.set("keyWord", keyWord);
+        }else{
+            url.searchParams.delete("keyWord");
+        }
+        window.location.href= url.href;
+    });
+}
