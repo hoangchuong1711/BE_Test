@@ -35,11 +35,20 @@ module.exports.index = async (req, res) => {
         find.status= req.query.status;
     }
 
+    let keyword="";
+
+    if(req.query.keyword) {
+        keyword= req.query.keyword
+        const re = new RegExp(keyword, "i");
+        find.title= re;
+    }
+
     const products = await product.find(find);
     //console.log(products);
     res.render("admin/pages/products/index", {
         pageTitle: "Trang tong quan",
         products: products,
-        filterStatus: filterStatus
+        filterStatus: filterStatus,
+        keyword: keyword
     });
 };

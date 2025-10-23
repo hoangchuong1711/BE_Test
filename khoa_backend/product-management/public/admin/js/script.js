@@ -17,17 +17,17 @@ if(buttonStatus.length>0){
     })
 }
 
-//from search
+//form search
 const fromSearch=document.querySelector("#form-search");
 if(fromSearch){
     let url = new URL(window.location.href); 
     fromSearch.addEventListener("submit",(e)=>{
         e.preventDefault();
-        const keyWord = e.target.elements.keyword.value;
-        if(keyWord){
-            url.searchParams.set("keyWord", keyWord);
+        const keyword = e.target.elements.keyword.value;
+        if(keyword){
+            url.searchParams.set("keyword", keyword);
         }else{
-            url.searchParams.delete("keyWord");
+            url.searchParams.delete("keyword");
         }
         window.location.href= url.href;
     });
