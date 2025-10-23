@@ -1,5 +1,7 @@
 const product = require("../../models/products.model");
 const filterStatusHelper = require("../../helpers/filterStatus");
+const searchHelper = require("../../helpers/search");
+
 // [GET] /admin/products
 module.exports.index = async (req, res) => {
     const filterStatus= filterStatusHelper(req.query);
@@ -12,12 +14,10 @@ module.exports.index = async (req, res) => {
         find.status= req.query.status;
     }
 
-    let keyword="";
+    const objectSearch= searchHelper(req.query);
 
-    if(req.query.keyword) {
-        keyword= req.query.keyword
-        const re = new RegExp(keyword, "i");
-        find.title= re;
+    if(objectSearch.regex) {
+        find.title= objectSearch.regex;
     }
 
     const products = await product.find(find);
@@ -26,6 +26,6 @@ module.exports.index = async (req, res) => {
         pageTitle: "Trang tong quan",
         products: products,
         filterStatus: filterStatus,
-        keyword: keyword
+        keyword: objectSearch.keyword
     });
 };
